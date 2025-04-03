@@ -23,21 +23,17 @@ jobs:
       - name: Install Docker and Docker Compose
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker.io docker-compose
+          sudo apt-get install -y docker.io docker-compose-plugin
           sudo systemctl start docker
           docker --version
-          docker-compose --version
+          docker compose version
 
       - name: Launch the external API service
         run: |
           git clone https://github.com/bondarenkokate73/simbirsoft_sdet_project.git external_api
-          cd external_api
-          docker-compose up --build -d
-          sleep 15
-
-      - name: Verify API is running
-        run: |
-          curl -f http://localhost:8080/actuator/health || (echo "API failed to start"; exit 1)
+          cd external_api && docker compose up --build -d
+          sleep 20  # Увеличили время ожидания
+          curl --retry 5 --retry-delay 5 --retry-all-errors -f http://localhost:8080/actuator/health
 
       - name: Cache Maven packages
         uses: actions/cache@v3
@@ -50,17 +46,17 @@ jobs:
         run: |
           mvn clean test
           mkdir -p allure-results
-          cp -r target/allure-results/* allure-results/ || echo "No Allure results"
+          [ -d target/allure-results ] && cp -r target/allure-results/* allure-results/
 
       - name: Upload Allure report
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: allure-report-${{ github.ref_name }}
           path: allure-results/
+          retention-days: 1
 
       - name: Clean up
         if: always()
         run: |
-          cd external_api
-          docker-compose down -v
+          cd external_api && docker compose down -v || true
