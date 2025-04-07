@@ -1,11 +1,19 @@
 package svm.simbirsoft.tests;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import svm.simbirsoft.helpers.BaseRequests;
-import svm.simbirsoft.pojo.Entity;
+import svm.simbirsoft.models.Entity;
 
 import java.util.List;
 
@@ -64,7 +72,7 @@ public class EntityGetAllTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Тест: Получение всех сущностей", threadPoolSize = 5, invocationCount = 1)
+    @Test(description = "Тест: Получение всех сущностей", threadPoolSize = 9, invocationCount = 1)
     @Story("Получение всех сущностей")
     @Severity(SeverityLevel.NORMAL)
     @Description("Тест проверяет получение полного списка сущностей")
@@ -106,7 +114,7 @@ public class EntityGetAllTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Тест:  Фильтрация сущностей по параметру title", threadPoolSize = 5, invocationCount = 1)
+    @Test(description = "Тест:  Фильтрация сущностей по параметру title", threadPoolSize = 9, invocationCount = 1)
     @Story("Фильтрация по title")
     @Severity(SeverityLevel.NORMAL)
     @Description("Тест проверяет фильтрацию сущностей по параметру title")
@@ -128,7 +136,7 @@ public class EntityGetAllTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Тест: проверка пагинации", threadPoolSize = 5, invocationCount = 1)
+    @Test(description = "Тест: проверка пагинации", threadPoolSize = 9, invocationCount = 1)
     @Story("Пагинация")
     @Severity(SeverityLevel.NORMAL)
     @Description("Тест проверяет работу пагинации при получении списка сущностей")
@@ -158,7 +166,7 @@ public class EntityGetAllTest {
         softAssert.assertAll();
     }
 
-    @Test(description = "Тест: Проверка количества элементов", threadPoolSize = 5, invocationCount = 1)
+    @Test(description = "Тест: Проверка количества элементов", threadPoolSize = 9, invocationCount = 1)
     @Story("Количество элементов на странице")
     @Severity(SeverityLevel.NORMAL)
     @Description("Тест проверяет параметр perPage для управления количеством элементов на странице")

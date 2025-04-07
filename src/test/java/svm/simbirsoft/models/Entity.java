@@ -1,4 +1,4 @@
-package svm.simbirsoft.pojo;
+package svm.simbirsoft.models;
 
 import lombok.Builder;
 import lombok.Data;

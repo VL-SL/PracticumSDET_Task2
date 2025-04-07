@@ -1,12 +1,18 @@
 package svm.simbirsoft.tests;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import svm.simbirsoft.helpers.BaseRequests;
-import svm.simbirsoft.pojo.Entity;
+import svm.simbirsoft.models.Entity;
 
 import java.util.List;
 
@@ -15,7 +21,7 @@ import java.util.List;
 public class EntityCreateTest {
     private String createdEntityId;
 
-    @Test (description = "Тест: Создание сущности", threadPoolSize = 5, invocationCount = 1)
+    @Test (description = "Тест: Создание сущности", threadPoolSize = 9, invocationCount = 1)
     @Story("Создание новой сущности")
     @Severity(SeverityLevel.BLOCKER)
     @Description("Тест проверяет успешное создание новой сущности через API")

@@ -1,12 +1,16 @@
 package svm.simbirsoft.tests;
 
-import io.qameta.allure.*;
-import io.restassured.response.Response;
-import org.testng.Assert;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import io.qameta.allure.Step;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import svm.simbirsoft.helpers.BaseRequests;
-import svm.simbirsoft.pojo.Entity;
+import svm.simbirsoft.models.Entity;
 
 import java.util.List;
 
@@ -28,20 +32,20 @@ public class EntityDeleteTest {
                 .verified(false)
                 .build();
 
-        Response createResponse = BaseRequests.post("/api/create", requestEntity);
-        Assert.assertEquals(createResponse.getStatusCode(), 200,
-                "Сущность не была создана (неверный статус код)");
-
-        createdEntityId = createResponse.asString();
+        createdEntityId = BaseRequests.post("/api/create", requestEntity)
+                .then()
+                .statusCode(200)
+                .extract()
+                .asString();
     }
 
-    @Test (description = "Тест: Удаление сущности", threadPoolSize = 5, invocationCount = 1)
+    @Test(description = "Тест: Удаление сущности", threadPoolSize = 9, invocationCount = 1)
     @Story("Удаление сущности")
     @Severity(SeverityLevel.CRITICAL)
     @Description("Тест проверяет успешное удаление сущности по ID")
     public void testSuccessfulDelete() {
-        Response deleteResponse = BaseRequests.delete("/api/delete/" + createdEntityId);
-        Assert.assertEquals(deleteResponse.getStatusCode(), 204,
-                "Сущность не была удалена (неверный статус код)");
+        BaseRequests.delete("/api/delete/" + createdEntityId)
+                .then()
+                .statusCode(204);
     }
 }
