@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Test Suite" parallel="methods" thread-count="9">
+    <test name="API Tests">
+        <classes>
+            <class name="svm.simbirsoft.tests.EntityCreateTest"/>
+            <class name="svm.simbirsoft.tests.EntityDeleteTest"/>
+            <class name="svm.simbirsoft.tests.EntityGetAllTest"/>
+            <class name="svm.simbirsoft.tests.EntityGetTest"/>
+            <class name="svm.simbirsoft.tests.EntityUpdateTest"/>
+        </classes>
+    </test>
+</suite>
